@@ -25,7 +25,7 @@ const getProducts = async (req, res) => {
           id, name, slug, tagline, short_description,
           price_pkr, compare_price_pkr, unit_label,
           tags, concern_tags, origin,
-          primary_image_url, is_bestseller, is_featured,
+          primary_image_url, images, is_bestseller, is_featured,
           rating_avg, rating_count,
           categories ( id, name, slug )
         `, { count: 'exact' })
@@ -147,7 +147,7 @@ const getFeaturedProducts = async (req, res) => {
         .select(`
           id, name, slug, tagline, short_description,
           price_pkr, compare_price_pkr, unit_label,
-          tags, primary_image_url, is_bestseller, is_featured,
+          tags, primary_image_url, images, is_bestseller, is_featured,
           rating_avg, rating_count,
           categories ( name, slug )
         `)
@@ -227,7 +227,7 @@ const getRelatedProducts = async (req, res) => {
           .select(`
             id, name, slug, tagline, short_description,
             price_pkr, compare_price_pkr, unit_label,
-            tags, primary_image_url, is_bestseller,
+            tags, primary_image_url, images, is_bestseller,
             rating_avg, rating_count,
             categories ( name, slug )
           `)

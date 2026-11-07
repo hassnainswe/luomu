@@ -26,6 +26,8 @@ export default function ProductCard({ product }) {
     openCart();
   };
 
+  // Second photo, shown on hover (desktop only).
+  const altImage = product.images?.find((src) => src && src !== product.primary_image_url);
   const stars = Math.round(product.rating_avg || 0);
   const badge = product.is_bestseller
     ? 'Bestseller'
@@ -42,7 +44,13 @@ export default function ProductCard({ product }) {
           onError={(e) => { e.target.src = PLACEHOLDER; }}
           loading="lazy"
         />
+        {altImage && (
+          <img className="product-card__alt" src={altImage} alt="" aria-hidden="true" loading="lazy" />
+        )}
         {badge && <span className="product-card__badge">{badge}</span>}
+        <button type="button" className="product-card__quick" onClick={handleAdd} aria-label={`Add ${product.name} to bag`}>
+          Add to bag · {formatPrice(product.price_pkr)}
+        </button>
       </div>
 
       <div className="product-card__body">

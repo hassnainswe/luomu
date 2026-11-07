@@ -60,17 +60,32 @@ function HeroSlides() {
       onFocus={pause(true)} onBlur={pause(false)}
       aria-roledescription="carousel" aria-label="Featured products"
     >
-      {HERO_SLIDES.map((s, i) => (
-        <img
-          key={s.slug}
-          src={s.img}
-          alt={i === active ? s.alt : ''}
-          aria-hidden={i !== active}
-          className={`hero-slides__img${i === active ? ' is-active' : ''}`}
-          fetchPriority={i === 0 ? 'high' : 'low'}
-          decoding="async"
-        />
-      ))}
+      <div className="hero-slides__frame">
+        {HERO_SLIDES.map((s, i) => (
+          <img
+            key={s.slug}
+            src={s.img}
+            alt={i === active ? s.alt : ''}
+            aria-hidden={i !== active}
+            className={`hero-slides__img${i === active ? ' is-active' : ''}`}
+            fetchPriority={i === 0 ? 'high' : 'low'}
+            decoding="async"
+          />
+        ))}
+
+        <div className="hero-slides__dots">
+          {HERO_SLIDES.map((s, i) => (
+            <button
+              key={s.slug}
+              type="button"
+              className="hero-slides__dot"
+              aria-label={`Show ${s.name}`}
+              aria-current={i === active}
+              onClick={() => setActive(i)}
+            />
+          ))}
+        </div>
+      </div>
 
       <Link to={`/products/${slide.slug}`} className="hero-slides__card" aria-live="polite">
         <div key={slide.slug} className="hero-slides__card-text">
@@ -80,19 +95,6 @@ function HeroSlides() {
           <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 10 }}>Shop now →</p>
         </div>
       </Link>
-
-      <div className="hero-slides__dots">
-        {HERO_SLIDES.map((s, i) => (
-          <button
-            key={s.slug}
-            type="button"
-            className="hero-slides__dot"
-            aria-label={`Show ${s.name}`}
-            aria-current={i === active}
-            onClick={() => setActive(i)}
-          />
-        ))}
-      </div>
     </div>
   );
 }
@@ -121,20 +123,23 @@ const CATEGORY_IMAGES = [
   },
 ];
 
-const STATS = [
-  { value: '100%', label: 'Natural & Vegan' },
-  { value: '0', label: 'Sulfates · Parabens · Silicones' },
-  { value: '4–8', label: 'Day Delivery Nationwide' },
+// Brand promises for the ticker; all from the client's sheets and delivery terms.
+const PROMISES = [
+  'Handcrafted in small batches',
+  '100% natural & vegan',
+  'No sulfates, parabens or silicones',
+  'Cash on delivery nationwide',
+  'Free delivery on any Pack of 2',
 ];
 
 export default function HomePage() {
   const [featured, setFeatured] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState('');
 
   useEffect(() => {
     document.title = 'LUOMU — Natural Science · Pure Harvest';
-    productsAPI.getFeatured()
+    // Top 4 live products, featured first, so the row stays full as products go live.
+    productsAPI.getAll({ sort: 'featured', limit: 4 })
       .then((res) => setFeatured(res.data.data || []))
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -143,43 +148,44 @@ export default function HomePage() {
   return (
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section style={{ padding: '80px 0 60px', borderBottom: '1px solid var(--color-tertiary)' }}>
-        <div className="container">
-          <div className="stack-md" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-            <div className="animate-slide-up">
-              <p className="label-caps" style={{ color: 'var(--color-secondary)', marginBottom: 16 }}>
-                · The Science Behind Natural Wellness
-              </p>
-              <h1 className="display-lg" style={{ marginBottom: 20 }}>
-                Pure herbal oils.{' '}
-                <em style={{ fontStyle: 'italic' }}>Formulated for your Daily Ritual.</em>
-              </h1>
-              <p className="body-lg" style={{ color: 'var(--color-secondary)', maxWidth: 480, marginBottom: 32 }}>
-                Handcrafted hair and body care made with 100% natural, plant-based ingredients —
-                free from harsh chemicals, sulfates, parabens and silicones.
-              </p>
-              <div className="wrap-md" style={{ display: 'flex', gap: 12 }}>
-                <Link to="/collections" className="btn btn--primary btn--lg">
-                  Explore Formulations
-                </Link>
-                <a href="#philosophy" className="btn btn--outline btn--lg">
-                  Our Philosophy
-                </a>
-              </div>
-
-              <div style={{ display: 'flex', gap: 40, marginTop: 40, paddingTop: 40, borderTop: '1px solid var(--color-tertiary)' }}>
-                {STATS.map((s) => (
-                  <div key={s.value}>
-                    <p style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 400 }}>{s.value}</p>
-                    <p className="label-caps" style={{ color: 'var(--color-secondary)', marginTop: 4 }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
+      <section className="hero">
+        <div className="container stack-md hero__grid">
+          <div>
+            <h1 className="hero__title">
+              <span className="hero__mask"><span className="hero__line">Pure herbal oils.</span></span>
+              <span className="hero__mask"><em className="hero__line">Formulated for</em></span>
+              <span className="hero__mask"><em className="hero__line">your daily ritual.</em></span>
+            </h1>
+            <p className="hero__lede hero__rise" style={{ '--d': '520ms' }}>
+              Handcrafted hair and body care made with 100% natural, plant-based ingredients —
+              free from harsh chemicals, sulfates, parabens and silicones.
+            </p>
+            <div className="wrap-md hero__rise" style={{ display: 'flex', gap: 12, '--d': '600ms' }}>
+              <Link to="/collections" className="btn btn--primary btn--lg">
+                Shop the Collection
+              </Link>
+              <a href="#philosophy" className="btn btn--outline btn--lg">
+                Our Philosophy
+              </a>
             </div>
-
-            <HeroSlides />
+            <ul className="hero__facts hero__rise" style={{ '--d': '680ms' }}>
+              <li>100% natural &amp; vegan</li>
+              <li>Cash on delivery</li>
+              <li>Delivered in 4–8 working days</li>
+            </ul>
           </div>
+
+          <HeroSlides />
         </div>
+      </section>
+
+      {/* ── Promise ticker ───────────────────────────────────── */}
+      <section className="ticker" aria-label="Why LUOMU">
+        <ul className="ticker__track">
+          {[...PROMISES, ...PROMISES].map((t, i) => (
+            <li key={i} aria-hidden={i >= PROMISES.length || undefined}>{t}</li>
+          ))}
+        </ul>
       </section>
 
       {/* ── Flagship Products ────────────────────────────────── */}
@@ -187,7 +193,6 @@ export default function HomePage() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40 }}>
             <div>
-              <p className="section__eyebrow">Curated Selection</p>
               <h2 className="section__title">Flagship Formulations</h2>
               <p className="section__subtitle">
                 Pure herbal oils for hair, scalp and body.
@@ -222,22 +227,13 @@ export default function HomePage() {
       <section className="section" style={{ background: 'var(--color-canvas)', borderTop: '1px solid var(--color-tertiary)', borderBottom: '1px solid var(--color-tertiary)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p className="label-caps" style={{ color: 'var(--color-secondary)', marginBottom: 12 }}>Shop by Ritual</p>
             <h2 className="headline-lg">Hair, Scalp &amp; Body</h2>
           </div>
 
           <div className="stack-md" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--gutter)' }}>
             {CATEGORY_IMAGES.map((cat) => (
-              <Link
-                key={cat.title}
-                to={cat.href}
-                style={{ position: 'relative', display: 'block', overflow: 'hidden' }}
-              >
-                <img
-                  src={cat.img}
-                  alt={cat.title}
-                  style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block' }}
-                />
+              <Link key={cat.title} to={cat.href} className="cat-card">
+                <img src={cat.img} alt="" className="cat-card__img" loading="lazy" />
                 <div style={{
                   position: 'absolute', inset: 0,
                   background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)',
@@ -245,9 +241,6 @@ export default function HomePage() {
                   display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
                   color: 'white',
                 }}>
-                  <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.7, marginBottom: 8 }}>
-                    {cat.label}
-                  </p>
                   <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, marginBottom: 8 }}>
                     {cat.title}
                   </h3>
@@ -267,7 +260,6 @@ export default function HomePage() {
         <div className="container">
           <div className="stack-md" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '5rem', alignItems: 'start' }}>
             <div>
-              <p className="label-caps" style={{ color: 'var(--color-secondary)', marginBottom: 12 }}>Our Philosophy</p>
               <h2 className="headline-lg" style={{ marginBottom: 20 }}>
                 The Science Behind <em>Natural Wellness</em>
               </h2>
@@ -289,7 +281,7 @@ export default function HomePage() {
             </div>
 
             <div>
-              <p className="label-caps" style={{ color: 'var(--color-secondary)', marginBottom: 8 }}>Key Botanicals</p>
+              <h3 className="headline-md" style={{ marginBottom: 6 }}>Key Botanicals</h3>
               <p style={{ fontSize: 13, color: 'var(--color-secondary)', marginBottom: 16 }}>
                 The plants doing the work, and where you&apos;ll find them.
               </p>
@@ -322,7 +314,6 @@ export default function HomePage() {
               </svg>
             </span>
             <div>
-              <p className="label-caps" style={{ color: 'var(--color-secondary)', marginBottom: 6 }}>Personal Advice</p>
               <h2 className="consult__title">Not sure which oil is right for you?</h2>
               <p className="consult__text">
                 Tell us about your hair or skin on WhatsApp and we&apos;ll help you choose — or place your

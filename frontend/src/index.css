@@ -1570,3 +1570,347 @@ input, textarea, select {
     max-width: 100%;
   }
 }
+
+/* ============================================================
+   Polish pass — motion tokens, hero entrance, ticker, card hovers,
+   and the browser surfaces (selection, scrollbar, underlines).
+   ============================================================ */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Browser surfaces carry the palette too */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+html {
+  scrollbar-color: #bdbdbd transparent;
+  scrollbar-width: thin;
+}
+
+input,
+textarea {
+  caret-color: var(--color-primary);
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+.filter-chip {
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 0 80px;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(42px, 5.4vw, 78px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+}
+
+.hero__title em {
+  font-style: italic;
+}
+
+/* Each line sits in a mask and rises into place once, on load. */
+.hero__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em; /* keeps italic descenders inside the mask */
+}
+
+.hero__line {
+  display: block;
+  animation: hero-line-in 1s var(--ease-out) both;
+}
+
+.hero__mask:nth-child(1) .hero__line { animation-delay: 180ms; }
+.hero__mask:nth-child(2) .hero__line { animation-delay: 260ms; }
+.hero__mask:nth-child(3) .hero__line { animation-delay: 340ms; }
+
+.hero__lede {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-secondary);
+  max-width: 470px;
+  margin-bottom: 36px;
+}
+
+.hero__rise {
+  animation: hero-rise 0.8s var(--ease-out) var(--d, 0ms) both;
+}
+
+.hero__facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid var(--color-tertiary);
+  font-size: 12px;
+  color: var(--color-secondary);
+}
+
+.hero__facts li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero__facts li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+/* Slideshow: the frame wipes open on load; the active photo drifts slowly. */
+.hero-slides__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-canvas);
+  animation: hero-frame-in 1.2s var(--ease-out) 80ms backwards;
+}
+
+.hero-slides__img {
+  transform: scale(1.06);
+}
+
+.hero-slides__img.is-active {
+  animation: hero-drift 6.5s linear both;
+}
+
+.hero-slides__card {
+  animation: hero-rise 0.8s var(--ease-out) 820ms both;
+  transition: border-color var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-slides__card:hover {
+    border-color: var(--color-primary);
+  }
+}
+
+@keyframes hero-line-in {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-frame-in {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes hero-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+/* ── Promise ticker ───────────────────────────────────────── */
+.ticker {
+  background: var(--color-primary);
+  color: var(--color-white);
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.ticker__track {
+  list-style: none;
+  display: flex;
+  width: max-content;
+  animation: ticker 48s linear infinite;
+}
+
+.ticker:hover .ticker__track {
+  animation-play-state: paused;
+}
+
+.ticker__track li {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  white-space: nowrap;
+  padding-right: 48px;
+}
+
+.ticker__track li::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-left: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Product cards: second photo + quick add on hover ─────── */
+.product-card__alt {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.product-card__quick {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card__image-wrap img {
+    transition: transform 0.7s var(--ease-out), opacity 0.35s ease;
+  }
+
+  .product-card:hover .product-card__alt {
+    opacity: 1;
+  }
+
+  .product-card__quick {
+    display: block;
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    padding: 12px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(calc(100% + 12px));
+    transition: transform 0.25s var(--ease-out), opacity 0.25s var(--ease-out), background-color var(--transition-fast);
+  }
+
+  .product-card:hover .product-card__quick,
+  .product-card__quick:focus-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-card__quick:hover {
+    background: #333;
+  }
+
+  /* Desktop uses the bar; the small "+" stays for touch screens. */
+  .product-card__add {
+    display: none;
+  }
+}
+
+/* ── Category cards ──────────────────────────────────────── */
+.cat-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.cat-card__img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.9s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cat-card:hover .cat-card__img {
+    transform: scale(1.04);
+  }
+}
+
+/* ── Phone ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 0 56px;
+  }
+  .hero__grid {
+    gap: 2.5rem;
+  }
+  .hero__lede {
+    font-size: 15px;
+  }
+  .hero .btn {
+    flex: 1 1 100%;
+  }
+  .ticker {
+    padding: 14px 0;
+  }
+  .ticker__track li {
+    font-size: 18px;
+    padding-right: 32px;
+  }
+  .ticker__track li::after {
+    margin-left: 32px;
+  }
+}
+
+/* ── Reduced motion: keep the fades, drop the movement ───── */
+@media (prefers-reduced-motion: reduce) {
+  .hero__line,
+  .hero-slides__frame {
+    animation: none;
+  }
+  .hero__rise,
+  .hero-slides__card {
+    animation-name: hero-fade;
+  }
+  .hero-slides__img,
+  .hero-slides__img.is-active {
+    animation: none;
+    transform: none;
+  }
+  .ticker__track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 0;
+  }
+  .ticker__track li[aria-hidden='true'] {
+    display: none;
+  }
+  .cat-card__img,
+  .product-card__quick {
+    transition: opacity 0.2s ease;
+  }
+}
+
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
