@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+.gstack/
+
+# Design references and raw client uploads
+stitch_remix_of_loumu_botanical_e_commerce_website/
+*.docx
+/*.jpeg
+
