@@ -64,10 +64,10 @@ ON CONFLICT (code) DO NOTHING;
 DELETE FROM products WHERE slug IN (${OLD_SLUGS.map(q).join(', ')});
 DELETE FROM categories WHERE slug = 'ritual-tools';
 
-INSERT INTO categories (name, slug, description, sort_order) VALUES
-${categories.map((c) => `  (${q(c.name)}, ${q(c.slug)}, ${q(c.description)}, ${c.sort_order})`).join(',\n')}
+INSERT INTO categories (id, name, slug, description, sort_order) VALUES
+${categories.map((c) => `  (${q(c.id)}, ${q(c.name)}, ${q(c.slug)}, ${q(c.description)}, ${c.sort_order})`).join(',\n')}
 ON CONFLICT (slug) DO UPDATE SET
-  name = EXCLUDED.name, description = EXCLUDED.description, sort_order = EXCLUDED.sort_order;
+  id = EXCLUDED.id, name = EXCLUDED.name, description = EXCLUDED.description, sort_order = EXCLUDED.sort_order;
 
 -- Products (inactive rows are waiting for a photo: set primary_image_url/images, then is_active = TRUE)
 INSERT INTO products (
@@ -77,7 +77,7 @@ INSERT INTO products (
   is_bestseller, is_featured, is_active, rating_avg, rating_count
 ) VALUES
 ${allProducts.map((p) => `(
-  ${q(p.id)}, (SELECT id FROM categories WHERE slug = ${q(p.categories.slug)}),
+  ${q(p.id)}, ${q(p.category_id)},
   ${q(p.name)}, ${q(p.slug)}, ${q(p.tagline)},
   ${q(p.short_description)},
   ${q(p.description)},

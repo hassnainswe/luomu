@@ -41,12 +41,12 @@ ON CONFLICT (code) DO NOTHING;
 DELETE FROM products WHERE slug IN ('night-skin-repair-cream', 'wild-rosemary-black-seed-scalp-oil', 'wild-walnut-peptide-bakuchiol-elixir', 'sweet-almond-pink-salt-smoothing-oil', 'alpine-thyme-niacinamide-clarifying-drops', 'skardu-green-nephrite-gua-sha', 'hunza-apricot-glacier-dew-mist', 'pine-resin-squalane-recovery-butter', 'wild-sea-buckthorn-rosa-nectar');
 DELETE FROM categories WHERE slug = 'ritual-tools';
 
-INSERT INTO categories (name, slug, description, sort_order) VALUES
-  ('Hair & Scalp', 'hair-scalp', 'Pure herbal hair oils that nourish the scalp, strengthen roots and restore natural shine.', 1),
-  ('Body Care', 'body-care', 'Glow oils and hand-sealed scrubs for soft, deeply hydrated skin.', 2),
-  ('Face Care', 'skin-care', 'Natural masks that brighten, gently exfoliate and even out skin tone.', 3)
+INSERT INTO categories (id, name, slug, description, sort_order) VALUES
+  ('c0000000-0000-4000-8000-000000000001', 'Hair & Scalp', 'hair-scalp', 'Pure herbal hair oils that nourish the scalp, strengthen roots and restore natural shine.', 1),
+  ('c0000000-0000-4000-8000-000000000002', 'Body Care', 'body-care', 'Glow oils and hand-sealed scrubs for soft, deeply hydrated skin.', 2),
+  ('c0000000-0000-4000-8000-000000000003', 'Face Care', 'skin-care', 'Natural masks that brighten, gently exfoliate and even out skin tone.', 3)
 ON CONFLICT (slug) DO UPDATE SET
-  name = EXCLUDED.name, description = EXCLUDED.description, sort_order = EXCLUDED.sort_order;
+  id = EXCLUDED.id, name = EXCLUDED.name, description = EXCLUDED.description, sort_order = EXCLUDED.sort_order;
 
 -- Products (inactive rows are waiting for a photo: set primary_image_url/images, then is_active = TRUE)
 INSERT INTO products (
@@ -56,7 +56,7 @@ INSERT INTO products (
   is_bestseller, is_featured, is_active, rating_avg, rating_count
 ) VALUES
 (
-  '10000000-0000-4000-8000-000000000001', (SELECT id FROM categories WHERE slug = 'hair-scalp'),
+  '10000000-0000-4000-8000-000000000001', 'c0000000-0000-4000-8000-000000000001',
   'Herbelle Hair Oil', 'herbelle-hair-oil', 'Hair Oil · 100 ML',
   'A 100% pure herbal blend that nourishes the scalp, strengthens roots and restores natural shine.',
   'A 100% pure organic and herbal blend, free from harsh chemicals, sulfates and parabens. It stimulates microcirculation to wake up dormant follicles, reduces breakage, repairs split ends and enhances natural shine — in a lightweight formula that absorbs into scalp and hair without feeling greasy.',
@@ -71,7 +71,7 @@ INSERT INTO products (
   false, true, true, 0, 0
 ),
 (
-  '10000000-0000-4000-8000-000000000002', (SELECT id FROM categories WHERE slug = 'hair-scalp'),
+  '10000000-0000-4000-8000-000000000002', 'c0000000-0000-4000-8000-000000000001',
   'Rosemary Fenugreek Infused Hair Oil', 'rosemary-fenugreek-hair-oil', 'Hair Growth Oil · 100 ML',
   'High-concentration rosemary and fresh fenugreek sprouts to wake dormant follicles for thicker, stronger hair.',
   'Thicker, stronger hair starts at the scalp — and this rosemary hair growth oil is formulated to get you there. Blended with high-concentration rosemary oil and fenugreek sprouts extracted fresh, it improves blood circulation to the scalp, reduces inflammation, and wakes up dormant hair follicles that have stopped producing. Lightweight enough for regular use, it strengthens roots from the first application and supports visibly denser hair with consistent use over 3 to 6 months.',
@@ -86,7 +86,7 @@ INSERT INTO products (
   false, true, true, 0, 0
 ),
 (
-  '10000000-0000-4000-8000-000000000003', (SELECT id FROM categories WHERE slug = 'body-care'),
+  '10000000-0000-4000-8000-000000000003', 'c0000000-0000-4000-8000-000000000002',
   'Almond & Tea Tree Glow Oil', 'almond-tea-tree-glow-oil', 'Body Oil · 100 ML',
   'Sweet almond and tea tree in a lightweight body oil that hydrates, clarifies and leaves a satin glow.',
   'Nourish, protect, and restore your skin with our Almond & Tea Tree Body Oil — a balanced blend designed to deliver deep hydration while clarifying and soothing the skin. The anti-inflammatory and anti-bacterial properties of tea tree oil meet naturally glossy almond oil and pure essential extracts in a lightweight formula that restores elasticity and leaves a radiant, satin finish without any greasy feel.',
@@ -101,7 +101,7 @@ INSERT INTO products (
   false, true, true, 0, 0
 ),
 (
-  '10000000-0000-4000-8000-000000000004', (SELECT id FROM categories WHERE slug = 'skin-care'),
+  '10000000-0000-4000-8000-000000000004', 'c0000000-0000-4000-8000-000000000003',
   'Daily Grind & Glow Face Mask', 'daily-grind-glow-face-mask', 'Face Mask · 150 G',
   'Finely ground coffee, roasted turmeric and rice flour to buff away dullness and lift tan.',
   'Unveil a radiant, refreshed complexion with our invigorating blend of finely ground coffee, gently roasted turmeric, and coarse rice flour — designed to buff away dullness and remove skin tan.',
@@ -116,7 +116,7 @@ INSERT INTO products (
   false, false, false, 0, 0
 ),
 (
-  '10000000-0000-4000-8000-000000000005', (SELECT id FROM categories WHERE slug = 'body-care'),
+  '10000000-0000-4000-8000-000000000005', 'c0000000-0000-4000-8000-000000000002',
   'Pink Himalayan Coconut Bath Salt Scrub', 'pink-himalayan-coconut-bath-salt-scrub', 'Body Scrub · 300 G',
   'Pink Himalayan salt and coconut to exfoliate, unclog pores and leave skin velvety smooth.',
   'Expertly crafted to gently remove dead skin cells, unclog pores, and stimulate surface circulation, this rejuvenating body scrub leaves your skin feeling velvety smooth and visibly glowing.',
@@ -131,7 +131,7 @@ INSERT INTO products (
   false, false, false, 0, 0
 ),
 (
-  '10000000-0000-4000-8000-000000000006', (SELECT id FROM categories WHERE slug = 'body-care'),
+  '10000000-0000-4000-8000-000000000006', 'c0000000-0000-4000-8000-000000000002',
   'Shea & Silk Scrub', 'shea-silk-scrub', 'Face & Body Scrub · 250 G',
   'Raw shea butter and silk proteins polish away dead skin while drenching it in lasting moisture.',
   'Indulge your skin in the ultimate velvet-touch treatment. Our Shea & Silk Scrub blends deeply moisturizing raw shea butter with luxurious silk proteins to polish away dead skin cells while drenching your body in rich, lasting moisture.',
