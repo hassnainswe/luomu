@@ -4,7 +4,16 @@ const fs = require('fs');
 const root = path.join(__dirname, '../..');
 const { categories, allProducts, vouchers } = require(path.join(root, 'backend/src/data/mockData.js'));
 
-const q = (v) => (v == null ? 'NULL' : typeof v === 'number' || typeof v === 'boolean' ? String(v) : `'${String(v).replace(/'/g, "''")}'`);
+const q = (v) => {
+  if (v == null) return 'NULL';
+  if (typeof v === 'number' || typeof v === 'boolean') return String(v);
+  const s = String(v);
+  if (s.includes('\n')) {
+    const escaped = s.replace(/'/g, "''").replace(/\\/g, '\\\\').replace(/\r/g, '').replace(/\n/g, '\\n');
+    return `E'${escaped}'`;
+  }
+  return `'${s.replace(/'/g, "''")}'`;
+};
 const arr = (a) => (a && a.length ? `ARRAY[${a.map(q).join(', ')}]` : `'{}'::TEXT[]`);
 const json = (v) => `${q(JSON.stringify(v ?? []))}::JSONB`;
 

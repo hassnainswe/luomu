@@ -63,9 +63,7 @@ INSERT INTO products (
   2250, NULL, 'LM-HERB-100', '100 ML',
   ARRAY['HANDCRAFTED'], ARRAY['HAIR FALL', 'SCALP CARE', 'DRY HAIR'], NULL, '100% Natural & Vegan',
   '/images/products/herbelle-studio.jpg', '["/images/products/herbelle-studio.jpg","/images/products/herbelle-lifestyle.jpg","/images/products/herbelle-linen.jpg"]'::JSONB, '[{"title":"Nourishes & Revitalizes the Scalp","desc":"Delivers essential nutrients from pure organic oils and herbs directly to the scalp, creating the optimal environment for healthy hair growth."},{"title":"Strengthens Roots to Reduce Breakage","desc":"Fortifies weak strands right from the root, minimizing hair fall and preventing split ends."},{"title":"Restores Natural Shine & Softness","desc":"Deeply hydrates coarse or dry hair without a heavy, greasy residue, restoring smooth texture and natural luster."},{"title":"100% Pure & Plant-Based","desc":"Free from harsh chemicals, sulfates, parabens and synthetic additives — safe for all hair types and everyday use."}]'::JSONB,
-  'Shake well before use. Massage 8–10 drops into scalp and lengths. Massaging helps spread the oil and relaxes the scalp. Leave for minimum 60 minutes, then wash.
-
-Washing tip: Made with natural oils, so it may feel thick. Apply shampoo to dry hair first. Massage, add water, and rinse. Repeat if needed.',
+  E'Shake well before use. Massage 8–10 drops into scalp and lengths. Massaging helps spread the oil and relaxes the scalp. Leave for minimum 60 minutes, then wash.\n\nWashing tip: Made with natural oils, so it may feel thick. Apply shampoo to dry hair first. Massage, add water, and rinse. Repeat if needed.',
   'Yellow Mustard Seed Oil, Alkanet Root Extract, Fenugreek Seed Extract, Black Seed Extract, Hibiscus Flower Extract, Flex Seed Extract, Clove, Aloe Vera, Curry Leaf Extract, Rosemary Leaf Extract, Jasmine Flower.',
   'For external use only. Our oil is 100% pure, with no additives or silicone. This is great for your hair, but natural oil can feel stubborn to wash out. A second wash is normal with natural oils.',
   NULL,
@@ -80,9 +78,7 @@ Washing tip: Made with natural oils, so it may feel thick. Apply shampoo to dry 
   2350, NULL, 'LM-ROSE-100', '100 ML',
   ARRAY['HAIR GROWTH'], ARRAY['HAIR GROWTH', 'HAIR FALL', 'SCALP CARE'], NULL, '100% Natural & Vegan',
   '/images/products/rosemary-fenugreek.jpg', '["/images/products/rosemary-fenugreek.jpg","/images/products/oil-trio-marble.jpg"]'::JSONB, '[{"title":"Faster Hair Growth","desc":"Rosemary and fenugreek work together to stimulate follicle activity, promoting new growth in thinning and sparse areas."},{"title":"Reduced Hair Fall","desc":"Strengthens hair from the root up, so each strand anchors better and sheds less with every wash."},{"title":"Less Scalp Inflammation","desc":"Anti-inflammatory botanicals soothe an irritated scalp, removing one of the most common hidden causes of excessive hair fall."},{"title":"Stronger, Thicker Strands","desc":"Regular use coats and conditions each strand along the shaft, reducing breakage and building visible volume over time."},{"title":"Dormant Follicle Activation","desc":"The concentrated formula targets follicles that have slowed or stopped, gradually reactivating them for new growth cycles."}]'::JSONB,
-  'Shake well before use. Massage 10–12 drops into scalp and lengths. Massaging helps spread the oil and relaxes the scalp. Leave for minimum 60 minutes, then wash.
-
-Washing tip: Made with natural oils, so it may feel thick. Apply shampoo to dry hair first. Massage, add water, and rinse. Repeat if needed.',
+  E'Shake well before use. Massage 10–12 drops into scalp and lengths. Massaging helps spread the oil and relaxes the scalp. Leave for minimum 60 minutes, then wash.\n\nWashing tip: Made with natural oils, so it may feel thick. Apply shampoo to dry hair first. Massage, add water, and rinse. Repeat if needed.',
   'Yellow Mustard Seed Oil, Coconut Oil, Rosemary Leaf Extract, Fenugreek Sprouts, Rosemary Oil, Cloves, and Flower Oil.',
   'For external use only. Our oil is 100% pure, with no additives or silicone. This is great for your hair, but natural oil can feel stubborn to wash out. A second wash is normal with natural oils.',
   NULL,
@@ -97,9 +93,7 @@ Washing tip: Made with natural oils, so it may feel thick. Apply shampoo to dry 
   2450, NULL, 'LM-ALMT-100', '100 ML',
   ARRAY['BODY GLOW'], ARRAY['DEEP HYDRATION', 'BODY BLEMISHES'], NULL, '100% Natural & Vegan',
   '/images/products/almond-tea-tree.jpg', '["/images/products/almond-tea-tree.jpg","/images/products/oil-trio-linen.jpg"]'::JSONB, '[{"title":"Deep & Long-Lasting Hydration","desc":"Rich in fatty acids and Vitamin E, sweet almond oil penetrates the skin barrier to lock in moisture and soften dry, rough areas."},{"title":"Clears & Prevents Body Blemishes","desc":"The purifying qualities of tea tree oil help keep pores clear, helping prevent body acne on the chest, back and shoulders."},{"title":"Improves Skin Tone & Texture","desc":"Regular application helps smooth uneven texture, fade minor scars or dark spots, and improve overall elasticity."},{"title":"Fast-Absorbing & Non-Greasy","desc":"A lightweight body treatment that absorbs quickly into damp skin, leaving a silky, healthy glow rather than an oily residue."},{"title":"All-Natural & Refreshing","desc":"Free from synthetic fragrances, harsh chemicals and parabens, with a clean, herbal-nutty aroma."}]'::JSONB,
-  'Step 1 — Cleanse: shower or bathe with warm water, or use our bath salt scrub.
-Step 2 — Drop & warm: dispense 3–5 drops onto palms and warm between hands.
-Step 3 — Massage: gently massage into damp skin from neck to toe until smooth and radiant.',
+  E'Step 1 — Cleanse: shower or bathe with warm water, or use our bath salt scrub.\nStep 2 — Drop & warm: dispense 3–5 drops onto palms and warm between hands.\nStep 3 — Massage: gently massage into damp skin from neck to toe until smooth and radiant.',
   'Sweet Almond Oil, Coconut Oil, Jojoba Oil, Argan Kernel Oil, Tea Tree Leaf Oil, Jasmine Oil, Vitamin E.',
   'For external use only. Contains essential oils; do a patch test on a small area of skin 24 hours before full application. Avoid direct contact with eyes. If irritation occurs, discontinue use immediately.',
   NULL,
