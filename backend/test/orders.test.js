@@ -5,11 +5,10 @@ delete process.env.SUPABASE_SERVICE_ROLE_KEY;
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { createOrder, trackOrder } = require('../src/controllers/orderController');
-const { products, allProducts } = require('../src/data/mockData');
+const { products } = require('../src/data/mockData');
 
 const herbelle = products.find((p) => p.slug === 'herbelle-hair-oil');
-const pack2 = herbelle.product_variants.find((v) => v.free_delivery);
-const hidden = allProducts.find((p) => !p.is_active);
+const pack2 = herbelle.product_variants.find((v) => v.label === 'Pack of 2');
 
 const call = async (body) => {
   const res = { statusCode: 200, status(c) { this.statusCode = c; return this; }, json(b) { this.body = b; return this; } };
@@ -26,41 +25,41 @@ test('ignores client-sent prices and charges PKR 250 delivery under the threshol
   assert.match(res.body.data.order_number, /^LM-[0-9A-F]{10}$/);
 });
 
-test('pack of 2 ships free and applies voucher server-side', async () => {
+test('pack of 2 is priced server-side, pays Rs 250 delivery, voucher applied server-side', async () => {
   const res = await call({ items: [{ product_id: herbelle.id, variant_id: pack2.id, quantity: 1 }], voucher_code: 'welcome10', voucher_discount: 99999 });
   assert.equal(res.statusCode, 201);
-  assert.equal(res.body.data.delivery_pkr, 0);
   assert.equal(res.body.data.subtotal_pkr, 4400);
+  assert.equal(res.body.data.delivery_pkr, 250);
   assert.equal(res.body.data.discount_pkr, 440);
-  assert.equal(res.body.data.total_pkr, 3960);
+  assert.equal(res.body.data.total_pkr, 4210);
 });
 
-test('free delivery at PKR 4,000+ even without a pack', async () => {
-  const res = await call({ items: [{ product_id: herbelle.id, quantity: 2 }] });
-  assert.equal(res.body.data.subtotal_pkr, 4500);
-  assert.equal(res.body.data.delivery_pkr, 0);
+test('delivery is a flat Rs 250 even on large orders', async () => {
+  const res = await call({ items: [{ product_id: herbelle.id, quantity: 4 }] });
+  assert.equal(res.body.data.subtotal_pkr, 9000);
+  assert.equal(res.body.data.delivery_pkr, 250);
 });
 
 test('rejects unpriced/inactive products, bad quantities and bad vouchers', async () => {
-  assert.equal((await call({ items: [{ product_id: hidden.id, quantity: 1 }] })).statusCode, 400);
+  products.push({ ...herbelle, id: 'hidden-test-product', is_active: false }); // a hidden product must not be buyable
+  try {
+    assert.equal((await call({ items: [{ product_id: 'hidden-test-product', quantity: 1 }] })).statusCode, 400);
+  } finally {
+    products.pop();
+  }
+  assert.equal((await call({ items: [{ product_id: 'no-such-product', quantity: 1 }] })).statusCode, 400);
   assert.equal((await call({ items: [{ product_id: herbelle.id, quantity: -3 }] })).statusCode, 400);
   assert.equal((await call({ items: [{ product_id: herbelle.id, quantity: 1 }], voucher_code: 'FAKE' })).statusCode, 400);
   assert.equal((await call({ items: [{ product_id: herbelle.id, quantity: 1 }], payment_method: 'CARD' })).statusCode, 400);
 });
 
-test('pack of 2 ships free even below PKR 4,000', async () => {
-  const mask = allProducts.find((p) => p.slug === 'daily-grind-glow-face-mask');
-  products.push({ ...mask, is_active: true }); // simulate it going live
-  try {
-    const pack = mask.product_variants.find((v) => v.free_delivery);
-    const res = await call({ items: [{ product_id: mask.id, variant_id: pack.id, quantity: 1 }] });
-    assert.equal(res.body.data.subtotal_pkr, 2600);
-    assert.equal(res.body.data.delivery_pkr, 0);
-    const single = await call({ items: [{ product_id: mask.id, quantity: 1 }] });
-    assert.equal(single.body.data.delivery_pkr, 250);
-  } finally {
-    products.pop();
-  }
+test('all 6 products are live; the face mask orders with flat delivery', async () => {
+  assert.equal(products.length, 6);
+  const mask = products.find((p) => p.slug === 'daily-grind-glow-face-mask');
+  const pack = mask.product_variants.find((v) => v.label === 'Pack of 2');
+  const res = await call({ items: [{ product_id: mask.id, variant_id: pack.id, quantity: 1 }] });
+  assert.equal(res.body.data.subtotal_pkr, 2600);
+  assert.equal(res.body.data.delivery_pkr, 250);
 });
 
 test('emails the owner a summary with a WhatsApp link to the customer', async () => {

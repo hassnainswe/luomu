@@ -17,11 +17,12 @@ const Chevron = ({ open }) => (
   </svg>
 );
 
-// Shop menu; add Face Care once a face product is live.
+// Shop menu.
 const SHOP_LINKS = [
   { label: 'All Products', to: '/collections' },
   { label: 'Hair & Scalp', to: '/collections?category=hair-scalp' },
   { label: 'Body Care', to: '/collections?category=body-care' },
+  { label: 'Face Care', to: '/collections?category=skin-care' },
 ];
 
 export default function Navbar() {
@@ -53,7 +54,7 @@ export default function Navbar() {
   return (
     <>
       <div className="announcement-bar">
-        Complimentary delivery across Pakistan on orders over PKR 4,000 or any Pack of 2 &nbsp;•&nbsp; Cash on Delivery Available
+        Delivery across Pakistan &nbsp;•&nbsp; Cash on Delivery Available
       </div>
       <nav className="nav">
         <div className="nav__inner">

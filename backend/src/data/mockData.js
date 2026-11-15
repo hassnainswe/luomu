@@ -2,7 +2,7 @@
  * LUOMU catalog — sourced from the client's product sheets (website.docx, website Scrub.docx).
  * Used when Supabase is not configured. supabase/migrations/002_real_catalog.sql seeds the same data.
  *
- * Inactive products are priced but have no photo yet; add primary_image_url/images and flip is_active.
+ * All 6 products are live (photos supplied 2026-11-16). To hide one, set is_active: false.
  */
 
 const IMG = '/images/products';
@@ -87,7 +87,7 @@ const allProducts = [
     rating_count: 0,
     product_variants: [
       { id: '20000000-0000-4000-8000-000000000011', label: 'Single · 100 ML', price_pkr: 2250, compare_price: null, free_delivery: false, is_default: true, sort_order: 0 },
-      { id: '20000000-0000-4000-8000-000000000012', label: 'Pack of 2 · Free Delivery', price_pkr: 4400, compare_price: 4500, free_delivery: true, is_default: false, sort_order: 1 },
+      { id: '20000000-0000-4000-8000-000000000012', label: 'Pack of 2', price_pkr: 4400, compare_price: 4500, free_delivery: false, is_default: false, sort_order: 1 },
     ],
     reviews: [],
   },
@@ -130,7 +130,7 @@ const allProducts = [
     rating_count: 0,
     product_variants: [
       { id: '20000000-0000-4000-8000-000000000021', label: 'Single · 100 ML', price_pkr: 2350, compare_price: null, free_delivery: false, is_default: true, sort_order: 0 },
-      { id: '20000000-0000-4000-8000-000000000022', label: 'Pack of 2 · Free Delivery', price_pkr: 4600, compare_price: 4700, free_delivery: true, is_default: false, sort_order: 1 },
+      { id: '20000000-0000-4000-8000-000000000022', label: 'Pack of 2', price_pkr: 4600, compare_price: 4700, free_delivery: false, is_default: false, sort_order: 1 },
     ],
     reviews: [],
   },
@@ -151,8 +151,8 @@ const allProducts = [
     concern_tags: ['DEEP HYDRATION', 'BODY BLEMISHES'],
     origin: null,
     standard: '100% Natural & Vegan',
-    primary_image_url: `${IMG}/almond-tea-tree.jpg`,
-    images: [`${IMG}/almond-tea-tree.jpg`, `${IMG}/oil-trio-linen.jpg`],
+    primary_image_url: `${IMG}/almond-tea-tree-silk.jpg`,
+    images: [`${IMG}/almond-tea-tree-silk.jpg`, `${IMG}/almond-tea-tree.jpg`, `${IMG}/oil-trio-linen.jpg`],
     benefits: [
       { title: 'Deep & Long-Lasting Hydration', desc: 'Rich in fatty acids and Vitamin E, sweet almond oil penetrates the skin barrier to lock in moisture and soften dry, rough areas.' },
       { title: 'Clears & Prevents Body Blemishes', desc: 'The purifying qualities of tea tree oil help keep pores clear, helping prevent body acne on the chest, back and shoulders.' },
@@ -175,7 +175,7 @@ const allProducts = [
     rating_count: 0,
     product_variants: [
       { id: '20000000-0000-4000-8000-000000000031', label: 'Single · 100 ML', price_pkr: 2450, compare_price: null, free_delivery: false, is_default: true, sort_order: 0 },
-      { id: '20000000-0000-4000-8000-000000000032', label: 'Pack of 2 · Free Delivery', price_pkr: 4700, compare_price: 4900, free_delivery: true, is_default: false, sort_order: 1 },
+      { id: '20000000-0000-4000-8000-000000000032', label: 'Pack of 2', price_pkr: 4700, compare_price: 4900, free_delivery: false, is_default: false, sort_order: 1 },
     ],
     reviews: [],
   },
@@ -196,8 +196,8 @@ const allProducts = [
     concern_tags: ['TAN & DULLNESS', 'EXFOLIATION'],
     origin: null,
     standard: '100% Natural',
-    primary_image_url: null, // TODO(client): photo not supplied
-    images: [],
+    primary_image_url: `${IMG}/face-mask.jpg`,
+    images: [`${IMG}/face-mask.jpg`],
     benefits: [
       { title: 'Brightens & Evens Tone', desc: 'Roasted turmeric is rich in antioxidants that fade dark spots, soothe inflammation, and restore a natural, healthy glow.' },
       { title: 'Exfoliates & Smooths', desc: 'Fine rice flour gently removes dead skin cells and absorbs excess oil, leaving skin soft, smooth and refined.' },
@@ -212,12 +212,12 @@ const allProducts = [
       'Due to shipping and transit, fine powder may occasionally sift around the inner seal. Seals are applied by hand, and with zero synthetic anti-caking agents slight settling is normal. It does not affect performance, safety or quality — simply break up any clumps with a clean, dry spoon before mixing.',
     is_bestseller: false,
     is_featured: false,
-    is_active: false,
+    is_active: true,
     rating_avg: 0,
     rating_count: 0,
     product_variants: [
       { id: '20000000-0000-4000-8000-000000000041', label: 'Single · 150 G', price_pkr: 1450, compare_price: null, free_delivery: false, is_default: true, sort_order: 0 },
-      { id: '20000000-0000-4000-8000-000000000042', label: 'Pack of 2 · Free Delivery', price_pkr: 2600, compare_price: 2900, free_delivery: true, is_default: false, sort_order: 1 },
+      { id: '20000000-0000-4000-8000-000000000042', label: 'Pack of 2', price_pkr: 2600, compare_price: 2900, free_delivery: false, is_default: false, sort_order: 1 },
     ],
     reviews: [],
   },
@@ -238,8 +238,8 @@ const allProducts = [
     concern_tags: ['EXFOLIATION', 'DEEP HYDRATION'],
     origin: null,
     standard: '100% Natural',
-    primary_image_url: null, // TODO(client): photo not supplied
-    images: [],
+    primary_image_url: `${IMG}/bath-salt-scrub.jpg`,
+    images: [`${IMG}/bath-salt-scrub.jpg`],
     benefits: [
       { title: 'Deeply Hydrates & Softens', desc: 'Rich coconut intensely moisturizes dry skin, leaving it silky-smooth without stripping natural oils.' },
       { title: 'Detoxifies & Mineralizes', desc: 'Packed with over 84 trace minerals, pink Himalayan salt helps draw out impurities while restoring mineral balance.' },
@@ -254,12 +254,12 @@ const allProducts = [
     disclaimer: SCRUB_DISCLAIMER,
     is_bestseller: false,
     is_featured: false,
-    is_active: false,
+    is_active: true,
     rating_avg: 0,
     rating_count: 0,
     product_variants: [
       { id: '20000000-0000-4000-8000-000000000051', label: 'Single · 300 G', price_pkr: 1750, compare_price: null, free_delivery: false, is_default: true, sort_order: 0 },
-      { id: '20000000-0000-4000-8000-000000000052', label: 'Pack of 2 · Free Delivery', price_pkr: 3500, compare_price: null, free_delivery: true, is_default: false, sort_order: 1 },
+      { id: '20000000-0000-4000-8000-000000000052', label: 'Pack of 2', price_pkr: 3500, compare_price: null, free_delivery: false, is_default: false, sort_order: 1 },
     ],
     reviews: [],
   },
@@ -301,7 +301,7 @@ const allProducts = [
     rating_count: 0,
     product_variants: [
       { id: '20000000-0000-4000-8000-000000000061', label: 'Single · 250 G', price_pkr: 2150, compare_price: null, free_delivery: false, is_default: true, sort_order: 0 },
-      { id: '20000000-0000-4000-8000-000000000062', label: 'Pack of 2 · Free Delivery', price_pkr: 4300, compare_price: null, free_delivery: true, is_default: false, sort_order: 1 },
+      { id: '20000000-0000-4000-8000-000000000062', label: 'Pack of 2', price_pkr: 4300, compare_price: null, free_delivery: false, is_default: false, sort_order: 1 },
     ],
     reviews: [],
   },

@@ -333,7 +333,7 @@ export default function ProductPage() {
             <div style={{ borderTop: '1px solid var(--color-tertiary)', paddingTop: 16 }}>
               <div className="stack-md" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 {[
-                  { icon: '🚚', title: 'Nationwide Delivery', desc: `${SHIPPING_POLICY} Free on orders above PKR 4,000 or any Pack of 2.` },
+                  { icon: '🚚', title: 'Nationwide Delivery', desc: `${SHIPPING_POLICY} Flat PKR 250 delivery.` },
                   { icon: '✅', title: 'Cash on Delivery', desc: 'Pay the courier when your parcel arrives.' },
                   { icon: '📦', title: 'Returns', desc: RETURNS_POLICY },
                 ].map((i) => (

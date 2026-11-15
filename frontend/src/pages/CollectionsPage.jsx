@@ -91,7 +91,7 @@ export default function CollectionsPage() {
                 <span>☑ No Additives or Silicones</span>
               </div>
               <div style={{ display: 'flex', gap: 20, fontSize: 12, color: 'var(--color-secondary)' }}>
-                <span>🚚 Free Delivery &gt; PKR 4,000 or any Pack of 2</span>
+                <span>🚚 Delivery across Pakistan</span>
               </div>
             </div>
           </div>

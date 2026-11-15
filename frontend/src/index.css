@@ -841,42 +841,6 @@ input, textarea, select {
   margin-left: 4px;
 }
 
-/* Free-delivery progress */
-.cart-ship {
-  padding: 16px var(--space-lg);
-  border-bottom: 1px solid var(--color-tertiary);
-}
-
-.cart-ship__text {
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.cart-ship__text--done {
-  color: var(--color-success);
-  font-weight: 500;
-}
-
-.cart-ship__hint {
-  font-size: 11px;
-  color: var(--color-secondary);
-  margin-bottom: 8px;
-}
-
-.cart-ship__bar {
-  height: 3px;
-  margin-top: 8px;
-  background: var(--color-tertiary);
-  overflow: hidden;
-}
-
-.cart-ship__bar span {
-  display: block;
-  height: 100%;
-  background: var(--color-primary);
-  transition: width 0.4s ease;
-}
-
 .cart-list {
   list-style: none;
   margin: 0;

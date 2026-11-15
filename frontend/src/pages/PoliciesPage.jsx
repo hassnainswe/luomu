@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  formatPrice, FREE_DELIVERY_THRESHOLD, DELIVERY_FEE, SHIPPING_POLICY, RETURNS_POLICY,
+  formatPrice, DELIVERY_FEE, SHIPPING_POLICY, RETURNS_POLICY,
   WHATSAPP_DISPLAY, whatsappLink, CONTACT_EMAIL,
 } from '../lib/utils';
 
@@ -12,7 +12,7 @@ const SECTIONS = [
     title: 'Shipping',
     body: [
       SHIPPING_POLICY,
-      `Delivery is free on orders of ${formatPrice(FREE_DELIVERY_THRESHOLD)} or more, and on any Pack of 2. Otherwise a flat ${formatPrice(DELIVERY_FEE)} delivery charge applies.`,
+      `Delivery is a flat ${formatPrice(DELIVERY_FEE)} on every order.`,
       'We confirm every order with you on WhatsApp before dispatch.',
     ],
   },

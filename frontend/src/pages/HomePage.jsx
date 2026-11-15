@@ -10,8 +10,8 @@ const HERO_SLIDES = [
     line: 'Strengthens hair & scalp · 100 ML', slug: 'herbelle-hair-oil', alt: 'Herbelle Hair Oil on a wooden tray beside wooden combs' },
   { img: '/images/products/rosemary-fenugreek.jpg', label: 'Hair Growth', name: 'Rosemary Fenugreek Hair Oil',
     line: 'Wakes dormant follicles · 100 ML', slug: 'rosemary-fenugreek-hair-oil', alt: 'Rosemary Fenugreek oil with fresh rosemary and fenugreek seeds' },
-  { img: '/images/products/almond-tea-tree.jpg', label: 'Body Glow', name: 'Almond & Tea Tree Glow Oil',
-    line: 'Deep hydration, satin glow · 100 ML', slug: 'almond-tea-tree-glow-oil', alt: 'Almond & Tea Tree Glow Oil held in hand' },
+  { img: '/images/products/almond-tea-tree-silk.jpg', label: 'Body Glow', name: 'Almond & Tea Tree Glow Oil',
+    line: 'Deep hydration, satin glow · 100 ML', slug: 'almond-tea-tree-glow-oil', alt: 'Almond & Tea Tree Glow Oil on silk with almonds' },
   { img: '/images/products/shea-silk-scrub.jpg', label: 'Body Scrub', name: 'Shea & Silk Scrub',
     line: 'Polishes & deeply moisturises · 250 G', slug: 'shea-silk-scrub', alt: 'Shea & Silk Scrub jar on linen' },
 ];
@@ -112,7 +112,7 @@ const CATEGORY_IMAGES = [
     title: 'Body Glow Oil',
     desc: 'Sweet almond and tea tree for deep hydration and a clear, satin glow.',
     href: '/collections?category=body-care',
-    img: '/images/products/almond-tea-tree.jpg',
+    img: '/images/products/almond-tea-tree-silk.jpg',
   },
   {
     label: 'THE COLLECTION',
@@ -129,7 +129,6 @@ const PROMISES = [
   '100% natural & vegan',
   'No sulfates, parabens or silicones',
   'Cash on delivery nationwide',
-  'Free delivery on any Pack of 2',
 ];
 
 export default function HomePage() {

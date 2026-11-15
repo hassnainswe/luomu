@@ -4,8 +4,7 @@ const { supabase, isConfigured, writesUnavailable } = require('../config/supabas
 const mockData = require('../data/mockData');
 const { notifyOwner } = require('../notify');
 
-const FREE_DELIVERY_THRESHOLD = 4000; // also free whenever the cart has a Pack of 2 (variant.free_delivery)
-const DELIVERY_FEE = 250;
+const DELIVERY_FEE = 250; // flat, every order (client decision 2026-11-16)
 const MAX_QTY_PER_LINE = 20;
 const PAYMENT_METHODS = ['COD', 'JAZZCASH', 'EASYPAISA', 'BANK'];
 
@@ -23,7 +22,7 @@ const priceItems = async (items) => {
     const ids = [...new Set(items.map((i) => i.product_id))];
     const { data, error } = await supabase
       .from('products')
-      .select('id, name, price_pkr, is_active, product_variants ( id, label, price_pkr, free_delivery )')
+      .select('id, name, price_pkr, is_active, product_variants ( id, label, price_pkr )')
       .in('id', ids);
     if (error) throw httpError(503, 'Catalog unavailable, please try again.');
     catalog = data;
@@ -31,8 +30,7 @@ const priceItems = async (items) => {
     catalog = mockData.products;
   }
 
-  let freeDelivery = false;
-  const lines = items.map((i) => {
+  return items.map((i) => {
     const product = catalog.find((p) => p.id === i.product_id && p.is_active !== false);
     if (!product) throw httpError(400, `${i.product_name || 'An item'} is no longer available.`);
 
@@ -44,7 +42,6 @@ const priceItems = async (items) => {
       throw httpError(400, `Invalid quantity for ${product.name}.`);
     }
 
-    if (variant?.free_delivery) freeDelivery = true;
     const unit = variant ? variant.price_pkr : product.price_pkr;
     if (!(unit > 0)) throw httpError(400, `${product.name} is not available for purchase yet.`);
 
@@ -59,7 +56,6 @@ const priceItems = async (items) => {
       line_total_pkr: unit * qty,
     };
   });
-  return { lines, freeDelivery };
 };
 
 const findVoucher = async (code) => {
@@ -123,9 +119,9 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Unsupported payment method.' });
     }
 
-    const { lines: enrichedItems, freeDelivery } = await priceItems(items);
+    const enrichedItems = await priceItems(items);
     const subtotal = enrichedItems.reduce((sum, i) => sum + i.line_total_pkr, 0);
-    const delivery = freeDelivery || subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
+    const delivery = DELIVERY_FEE;
 
     let discount = 0;
     let appliedVoucher = null;

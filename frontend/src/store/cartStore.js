@@ -39,7 +39,6 @@ const useCartStore = create(
                 unit_price_pkr: variant ? variant.price_pkr : product.price_pkr,
                 variant_id: variant?.id || null,
                 variant_label: variant?.label || null,
-                free_delivery: Boolean(variant?.free_delivery),
                 quantity: Math.min(MAX_QTY_PER_LINE, qty),
               },
             ],

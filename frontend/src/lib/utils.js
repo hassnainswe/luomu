@@ -31,12 +31,8 @@ export const getStars = (rating) => {
 export const formatOrderNumber = (num) => num?.toUpperCase() || '';
 
 // Must match backend/src/controllers/orderController.js — the server's figure is what gets charged.
-export const FREE_DELIVERY_THRESHOLD = 4000;
-export const DELIVERY_FEE = 250;
+export const DELIVERY_FEE = 250; // flat on every order
 export const MAX_QTY_PER_LINE = 20; // server rejects more per line
-// Free at the threshold, or whenever the bag holds a Pack of 2.
-export const deliveryFor = (subtotal, items = []) =>
-  subtotal >= FREE_DELIVERY_THRESHOLD || items.some((i) => i.free_delivery) ? 0 : DELIVERY_FEE;
 
 export const PLACEHOLDER_IMAGE = '/images/products/oil-trio-linen.jpg';
 

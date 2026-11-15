@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useCartStore from '../store/cartStore';
 import {
-  formatPrice, deliveryFor, FREE_DELIVERY_THRESHOLD, MAX_QTY_PER_LINE, PLACEHOLDER_IMAGE,
+  formatPrice, DELIVERY_FEE, MAX_QTY_PER_LINE, PLACEHOLDER_IMAGE,
 } from '../lib/utils';
 
 const XIcon = () => (
@@ -17,10 +17,8 @@ export default function CartDrawer() {
 
   const count = items.reduce((s, i) => s + i.quantity, 0);
   const subtotal = items.reduce((s, i) => s + i.unit_price_pkr * i.quantity, 0);
-  const delivery = deliveryFor(subtotal, items);
+  const delivery = DELIVERY_FEE;
   const total = subtotal + delivery;
-  const remaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
-  const progress = delivery === 0 ? 100 : Math.min(100, Math.round((subtotal / FREE_DELIVERY_THRESHOLD) * 100));
 
   // While open: Escape closes, the page behind doesn't scroll, focus starts on Close.
   useEffect(() => {
@@ -59,23 +57,6 @@ export default function CartDrawer() {
           </div>
         ) : (
           <>
-            <div className="cart-ship" aria-live="polite">
-              {delivery === 0 ? (
-                <p className="cart-ship__text cart-ship__text--done">✓ You&apos;ve unlocked free delivery</p>
-              ) : (
-                <>
-                  <p className="cart-ship__text">
-                    You&apos;re <strong>{formatPrice(remaining)}</strong> away from free delivery
-                  </p>
-                  <p className="cart-ship__hint">Tip: any Pack of 2 always ships free.</p>
-                </>
-              )}
-              <div className="cart-ship__bar" role="progressbar" aria-label="Progress to free delivery"
-                aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
-                <span style={{ width: `${progress}%` }} />
-              </div>
-            </div>
-
             <ul className="cart-drawer__body cart-list">
               {items.map((item) => (
                 <li className="cart-item" key={item._key}>

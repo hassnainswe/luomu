@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ordersAPI } from '../lib/api';
-import { formatPrice, deliveryFor, PLACEHOLDER_IMAGE as PLACEHOLDER, SHIPPING_POLICY, RETURNS_POLICY, whatsappLink } from '../lib/utils';
+import { formatPrice, DELIVERY_FEE, PLACEHOLDER_IMAGE as PLACEHOLDER, SHIPPING_POLICY, RETURNS_POLICY, whatsappLink } from '../lib/utils';
 import useCartStore from '../store/cartStore';
 import toast from 'react-hot-toast';
 
@@ -31,6 +31,8 @@ function Step({ num, title, isActive }) {
     </div>
   );
 }
+
+const FIELD_NAMES = { contact_phone: 'mobile number', contact_name: 'name', street_address: 'address', city: 'city' };
 
 function FormField({ label, id, error, children }) {
   return (
@@ -66,7 +68,7 @@ export default function CheckoutPage() {
   const [voucherLoading, setVoucherLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const delivery = deliveryFor(subtotal, items);
+  const delivery = DELIVERY_FEE;
   const discount = voucherData?.discount_pkr || 0;
   const total = subtotal + delivery - discount;
 
@@ -75,8 +77,10 @@ export default function CheckoutPage() {
   const validate = () => {
     const e = {};
     if (!form.contact_name.trim()) e.contact_name = 'Name is required.';
+    // Count digits so 0320-5727217, (0320) 5727217 and +92 320 5727217 all pass.
+    const phoneDigits = form.contact_phone.replace(/\D/g, '').length;
     if (!form.contact_phone.trim()) e.contact_phone = 'Phone number is required.';
-    if (!/^[\d\s\+\-]{10,15}$/.test(form.contact_phone.trim())) e.contact_phone = 'Enter a valid phone number.';
+    else if (phoneDigits < 10 || phoneDigits > 13) e.contact_phone = 'Enter a valid mobile number, e.g. 0320 5727217.';
     if (!form.street_address.trim()) e.street_address = 'Street address is required.';
     if (!form.city) e.city = 'City is required.';
     return e;
@@ -106,7 +110,15 @@ export default function CheckoutPage() {
 
     const e2 = validate();
     setErrors(e2);
-    if (Object.keys(e2).length > 0) return;
+    const invalid = Object.keys(e2);
+    if (invalid.length > 0) {
+      // Errors sit next to fields far above the Confirm button; without this the button seems to do nothing.
+      toast.error(`Please check: ${invalid.map((k) => FIELD_NAMES[k] || k).join(', ')}.`);
+      const first = document.getElementById(invalid[0]);
+      first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      first?.focus({ preventScroll: true });
+      return;
+    }
 
     setSubmitting(true);
     try {
@@ -159,7 +171,7 @@ export default function CheckoutPage() {
         background: 'var(--color-primary)', color: 'white', textAlign: 'center',
         padding: '10px', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
       }}>
-        Free Delivery Across Pakistan on Orders above PKR 4,000 or any Pack of 2
+        Delivery Across Pakistan · Cash on Delivery
       </div>
 
       {/* ── Logo + Steps ──────────────────────────────────── */}
@@ -223,12 +235,14 @@ export default function CheckoutPage() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <FormField label="Mobile Number or Email" id="contact_phone" error={errors.contact_phone}>
+                <FormField label="Mobile Number" id="contact_phone" error={errors.contact_phone}>
                   <input
                     id="contact_phone"
                     className="field__input"
                     type="tel"
-                    placeholder="+92 3XX XXXXXXX or name@example.com"
+                    placeholder="03XX XXXXXXX"
+                    inputMode="tel"
+                    autoComplete="tel"
                     value={form.contact_phone}
                     onChange={(e) => set('contact_phone', e.target.value)}
                   />

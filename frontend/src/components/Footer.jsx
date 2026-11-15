@@ -46,6 +46,7 @@ export default function Footer() {
               <li><a href="/collections" className="footer__link">All Formulations</a></li>
               <li><a href="/collections?category=hair-scalp" className="footer__link">Hair & Scalp</a></li>
               <li><a href="/collections?category=body-care" className="footer__link">Body Care</a></li>
+              <li><a href="/collections?category=skin-care" className="footer__link">Face Care</a></li>
             </ul>
           </div>
 

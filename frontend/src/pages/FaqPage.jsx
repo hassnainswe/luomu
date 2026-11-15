@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { formatPrice, FREE_DELIVERY_THRESHOLD, DELIVERY_FEE, whatsappLink } from '../lib/utils';
+import { formatPrice, DELIVERY_FEE, whatsappLink } from '../lib/utils';
 
 // DRAFT for client approval — every answer is taken from the client's product sheets
 // (website.docx, website Scrub.docx, website info.docx). Nothing here is a new claim.
@@ -51,7 +51,7 @@ const GROUPS = [
       },
       {
         q: 'How much is delivery?',
-        a: `Free on orders of ${formatPrice(FREE_DELIVERY_THRESHOLD)} or more, and on any Pack of 2. Otherwise it is a flat ${formatPrice(DELIVERY_FEE)}.`,
+        a: `A flat ${formatPrice(DELIVERY_FEE)} on every order, anywhere in Pakistan.`,
       },
       {
         q: 'How can I pay?',

@@ -79,7 +79,7 @@ export default function ConfirmationPage() {
         background: 'var(--color-primary)', color: 'white', textAlign: 'center',
         padding: '10px', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase',
       }}>
-        Free Delivery Across Pakistan on Orders Over PKR 4,000 or any Pack of 2 · Cash on Delivery · WhatsApp Ordering Available
+        Delivery Across Pakistan · Cash on Delivery · WhatsApp Ordering Available
       </div>
 
       {/* ── Header ──────────────────────────────────────────── */}
