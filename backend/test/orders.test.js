@@ -99,3 +99,15 @@ test('tracking needs the matching phone and hides the address', async () => {
   assert.equal((await track({ order_number: num, phone: '03009999999' })).statusCode, 404);
   assert.equal((await track({ order_number: 'LM-0000000000', phone: '03001234567' })).statusCode, 404);
 });
+
+test('every order field we save exists in the database schema', async () => {
+  // Guards against the live-only failure where orders inserted a column (payment_status) the table lacked.
+  const fs = require('fs');
+  const path = require('path');
+  const sql = fs.readFileSync(path.join(__dirname, '../../supabase/migrations/001_initial_schema.sql'), 'utf8');
+  const table = sql.slice(sql.indexOf('CREATE TABLE IF NOT EXISTS orders'));
+  const columns = [...table.slice(0, table.indexOf(');')).matchAll(/^\s+([a-z_]+)\s+[A-Z]/gm)].map((m) => m[1]);
+  const res = await call({ items: [{ product_id: herbelle.id, quantity: 1 }] });
+  const saved = Object.keys(res.body.data).filter((k) => !['id', 'created_at', 'order_items'].includes(k));
+  assert.deepEqual(saved.filter((k) => !columns.includes(k)), []);
+});

@@ -154,7 +154,6 @@ const createOrder = async (req, res) => {
       voucher_code: appliedVoucher,
       voucher_discount: discount,
       payment_method,
-      payment_status: 'PENDING',
     };
 
     if (isConfigured && supabase) {
