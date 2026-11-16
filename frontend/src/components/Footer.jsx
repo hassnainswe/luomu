@@ -25,6 +25,7 @@ export default function Footer() {
         <div className="footer__grid">
           {/* Brand */}
           <div>
+            <img src="/logo-mark-white.png" alt="" className="footer__logo-mark" width="48" height="48" />
             <div className="footer__brand-name">Luomu</div>
             <p className="footer__brand-desc">
               The science behind natural wellness. Handcrafted, 100% natural and

@@ -518,10 +518,36 @@ input, textarea, select {
 
 .nav__logo {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   line-height: 1;
-  gap: 2px;
   flex-shrink: 0;
+}
+
+.nav__logo-mark {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.nav__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer__logo-mark {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 768px) {
+  .nav__logo-mark {
+    width: 34px;
+    height: 34px;
+  }
 }
 
 .nav__logo-name {

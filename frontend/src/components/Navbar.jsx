@@ -58,9 +58,12 @@ export default function Navbar() {
       </div>
       <nav className="nav">
         <div className="nav__inner">
-          <Link to="/" className="nav__logo">
-            <span className="nav__logo-name">Luomu</span>
-            <span className="nav__logo-tagline">Natural Science · Pure Harvest</span>
+          <Link to="/" className="nav__logo" aria-label="LUOMU home">
+            <img src="/logo-mark.png" alt="" className="nav__logo-mark" width="40" height="40" />
+            <span className="nav__logo-text">
+              <span className="nav__logo-name">Luomu</span>
+              <span className="nav__logo-tagline">Natural Science · Pure Harvest</span>
+            </span>
           </Link>
 
           <div className="nav__links">
