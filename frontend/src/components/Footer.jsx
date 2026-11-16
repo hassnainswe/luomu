@@ -43,7 +43,7 @@ export default function Footer() {
           <div>
             <p className="footer__col-title">Boutique</p>
             <ul className="footer__links">
-              <li><a href="/collections" className="footer__link">All Formulations</a></li>
+              <li><a href="/collections" className="footer__link">All Products</a></li>
               <li><a href="/collections?category=hair-scalp" className="footer__link">Hair & Scalp</a></li>
               <li><a href="/collections?category=body-care" className="footer__link">Body Care</a></li>
               <li><a href="/collections?category=skin-care" className="footer__link">Face Care</a></li>
@@ -65,13 +65,9 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <p className="footer__col-title">The Botanical Dispatch</p>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: 4 }}>
-              Receive notes on seasonal harvests, therapeutic preparations, and
-              invitations to slow apothecary releases.
-            </p>
-            <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginBottom: 8 }}>
-              We honor your stillness. No aggressive promotions.
+            <p className="footer__col-title">Newsletter</p>
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: 8 }}>
+              New products and offers. No spam.
             </p>
             <form className="footer__newsletter-input" onSubmit={handleSubscribe}>
               <input
@@ -88,7 +84,7 @@ export default function Footer() {
             </form>
             {status === 'success' && (
               <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 6 }}>
-                Welcome to the apothecary.
+                Thanks for joining!
               </p>
             )}
             {status === 'error' && (
@@ -100,7 +96,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} LUOMU. Crafted with respect for nature • Pakistan</p>
+          <p>© {new Date().getFullYear()} LUOMU. Made in Pakistan</p>
           <div style={{ display: 'flex', gap: 24 }}>
             <a href="/policies#shipping" className="footer__link" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11 }}>Shipping & Returns</a>
             <a href="/policies#privacy" className="footer__link" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11 }}>Privacy</a>

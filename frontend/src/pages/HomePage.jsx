@@ -151,21 +151,19 @@ export default function HomePage() {
         <div className="container stack-md hero__grid">
           <div>
             <h1 className="hero__title">
-              <span className="hero__mask"><span className="hero__line">Pure herbal oils.</span></span>
-              <span className="hero__mask"><em className="hero__line">Formulated for</em></span>
-              <span className="hero__mask"><em className="hero__line">your daily ritual.</em></span>
+              <span className="hero__mask"><span className="hero__line">Natural care</span></span>
+              <span className="hero__mask"><em className="hero__line">for hair &amp; skin.</em></span>
             </h1>
             <p className="hero__lede hero__rise" style={{ '--d': '520ms' }}>
-              Handcrafted hair and body care made with 100% natural, plant-based ingredients —
-              free from harsh chemicals, sulfates, parabens and silicones.
+              Handmade with 100% natural ingredients. No harsh chemicals.
             </p>
             <div className="wrap-md hero__rise" style={{ display: 'flex', gap: 12, '--d': '600ms' }}>
               <Link to="/collections" className="btn btn--primary btn--lg">
-                Shop the Collection
+                Shop Now
               </Link>
-              <a href="#philosophy" className="btn btn--outline btn--lg">
-                Our Philosophy
-              </a>
+              <Link to="/about" className="btn btn--outline btn--lg">
+                Our Story
+              </Link>
             </div>
             <ul className="hero__facts hero__rise" style={{ '--d': '680ms' }}>
               <li>100% natural &amp; vegan</li>
@@ -192,13 +190,10 @@ export default function HomePage() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40 }}>
             <div>
-              <h2 className="section__title">Flagship Formulations</h2>
-              <p className="section__subtitle">
-                Pure herbal oils for hair, scalp and body.
-              </p>
+              <h2 className="section__title">Our Products</h2>
             </div>
             <Link to="/collections" className="btn btn--ghost">
-              View All Products →
+              View All →
             </Link>
           </div>
 
@@ -263,9 +258,7 @@ export default function HomePage() {
                 The Science Behind <em>Natural Wellness</em>
               </h2>
               <p className="body-md" style={{ color: 'var(--color-secondary)', lineHeight: 1.8, marginBottom: 32 }}>
-                Every LUOMU product is made from pure plant oils and herbs, with nothing added that your
-                hair or skin doesn&apos;t need. Because our oils are 100% pure, they can feel richer than
-                commercial formulas — a second wash is normal, and a sign there&apos;s no silicone inside.
+                Only pure plant oils and herbs. No silicone, so a second wash is normal.
               </p>
 
               <div className="feature-grid">
@@ -280,9 +273,9 @@ export default function HomePage() {
             </div>
 
             <div>
-              <h3 className="headline-md" style={{ marginBottom: 6 }}>Key Botanicals</h3>
+              <h3 className="headline-md" style={{ marginBottom: 6 }}>Key Ingredients</h3>
               <p style={{ fontSize: 13, color: 'var(--color-secondary)', marginBottom: 16 }}>
-                The plants doing the work, and where you&apos;ll find them.
+                What&apos;s inside, and where to find it.
               </p>
               <ul className="botanicals">
                 {BOTANICALS.map((b) => (
@@ -314,10 +307,7 @@ export default function HomePage() {
             </span>
             <div>
               <h2 className="consult__title">Not sure which oil is right for you?</h2>
-              <p className="consult__text">
-                Tell us about your hair or skin on WhatsApp and we&apos;ll help you choose — or place your
-                order directly in the chat.
-              </p>
+              <p className="consult__text">Message us and we&apos;ll help you choose.</p>
             </div>
           </div>
           <div className="wrap-md" style={{ display: 'flex', gap: 12, flexShrink: 0 }}>
